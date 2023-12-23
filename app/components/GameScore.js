@@ -4,16 +4,17 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import colours from '../config/colours'
 
-let nextId = 0;     // array index for match history
-
+let nextId = 1;     // array index for match history
 
 
 export default function GameScore({matchScore, setMatchScore, serverIndex, setServerIndex, matchStarted, setMatchStarted, player1, setPlayer1, player2, setPlayer2, matchScoreHistory, setMatchScoreHistory, bestOf}) {
 
   const [leftScore, setLeftScore] = useState(0);
   const [rightScore, setRightScore] = useState(0);
+
   const [gameOver, setGameOver] = useState(false);
   const [matchOver, setMatchOver] = useState(false);
+  const [swapedEndsInFinalGame, setSwapedEndsInFinalGame] = useState(false);
 
   const handleOnPressLeftScore = () => {
 
@@ -35,14 +36,23 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
 
         updateMatchScore("left");
       } 
-      // otherwise check it there's a change of server
-      else if (changeOfServerRequired() === true) {
-        setServerIndex(serverIndex => !serverIndex)
+      else {
+
+        // check it there's a change of server
+        if (changeOfServerRequired() === true) {
+          setServerIndex(serverIndex => !serverIndex)
+        }
+
+        // check if a there's a change of ends required in final game
+        if (changeOfEndsRequired("left") === true) {
+          swapEnds();
+          swapGameScores("left");
+        }
       }
 
       if (leftScore < 11 || ((leftScore - rightScore) < 2)) {
         setLeftScore(leftScore => leftScore + 1);
-     }
+      }
     
       // record the the match has started
       if (!matchStarted) {
@@ -71,15 +81,23 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
 
         updateMatchScore("right");
       } 
+      else {
 
-      // otherwise check it there's a change of server
-      else if (changeOfServerRequired() === true) {
-        setServerIndex(serverIndex => !serverIndex)
+        // check it there's a change of server
+        if (changeOfServerRequired() === true) {
+          setServerIndex(serverIndex => !serverIndex)
+        }
+
+        // check if a there's a change of ends required in final game
+        if (changeOfEndsRequired("right") === true) {
+          swapEnds();
+          swapGameScores("right");
+        }
       }
 
       if (rightScore < 11 || ((rightScore - leftScore) < 2)) {
         setRightScore(rightScore => rightScore + 1)
-     }
+      }
 
       // record the the match has started
       if (!matchStarted) {
@@ -142,10 +160,39 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
           playingEnd: "right" }
       });
     }
-}
+  }
+
+  const swapGameScores = (whichEndJustScored) => {
+
+    setSwapedEndsInFinalGame(swapedEndsInFinalGame => true);
+
+    if (whichEndJustScored == "right") {
+      setLeftScore(leftScore => rightScore + 1);
+      setRightScore(rightScore => leftScore - 1); 
+    } 
+    else {
+      setLeftScore(leftScore => rightScore - 1);
+      setRightScore(rightScore => leftScore + 1); 
+    }
+  }
 
   const changeOfServerRequired = () => {
     return ((((leftScore + rightScore) % 2) == 0) || (leftScore >= 10) || (rightScore >= 10))? false : true
+  }
+
+  const changeOfEndsRequired = (whichEndJustScored) => {
+    
+    if (whichEndJustScored == "right") {
+      return (
+        ((matchScore.leftGamesWon + matchScore.rightGamesWon + 1) == bestOf) &&
+        (swapedEndsInFinalGame == false) &&
+        (rightScore + 1 == 5))
+    } else {
+      return (
+        ((matchScore.leftGamesWon + matchScore.rightGamesWon + 1) == bestOf) &&
+        (swapedEndsInFinalGame == false) &&
+        (leftScore + 1 == 5))      
+    }
   }
 
   const resetGameScore = () => {
@@ -174,15 +221,27 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
         tookTimeout: false,
       }
     });
+
+    // reset match score
+    setMatchScore(previousState => {
+      return { ...previousState,
+        leftGamesWon: 0,
+        rightGamesWon: 0 }
+    });
+
+    // reset staus flags
+    setGameOver(gameOver => false);
+    setMatchOver(matchOver => false);
+    setMatchStarted(matchStarted => false);
+    setSwapedEndsInFinalGame(swapedEndsInFinalGame => false);
   }
 
   const saveMatchScoreHistory = () => {
-    setMatchScoreHistory([
-      ... matchScoreHistory,
-      {id: nextId++, p1GamesWon: player1.gamesWon, p2GamesWon: player2.gamesWon}
-    ]);
 
-    console.log("History", matchScoreHistory[0].p1GamesWon, "-", matchScoreHistory[0].p2GamesWon);
+    setMatchScoreHistory([
+      ...matchScoreHistory,
+      {key: nextId++, p1GamesWon: player1.gamesWon, p2GamesWon: player2.gamesWon}
+    ]);
   }
 
   const hideGameOverAlert = () => {  

@@ -1,5 +1,6 @@
+
 import { StatusBar } from 'expo-status-bar';
-import { Image, Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Image, FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { React, useState } from 'react'
 
 import WelcomeScreen from './app/assets/screens/WelcomeScreen';
@@ -39,7 +40,9 @@ export default function App() {
     rightGamesWon: 0
   });
 
-  const [matchScoreHistory, setMatchScoreHistory] = useState([]);
+  const [matchScoreHistory, setMatchScoreHistory] = useState([
+    {key: 0, p1GamesWon: "P1", p2GamesWon: "P2"}
+  ]);
 
   const bestOf = 3;                                         // number of games that must be won to take the match
   const [serverIndex, setServerIndex] = useState(0);        // 0 = server on left; 1 = on right
@@ -84,17 +87,16 @@ export default function App() {
           {(player1.playingEnd == "right") &&  <Cards style={styles.cardContainer} player={player1} setPlayer={setPlayer1}/> }
           {(player2.playingEnd == "right") &&  <Cards style={styles.cardContainer} player={player2} setPlayer={setPlayer2}/> }            
         </View>
-      </View>
 
-      <View>
-        <Text style={styles.matchHistoryText}>Running Score: </Text>
-        <ul>
-          {matchScoreHistory.map(score => (
-            <li key={score.id}>{score.p1GamesWon} - {score.p2GamesWon}</li>
-          ))}
-        </ul>
+      </View>     
+
+      <View style={styles.matchHistoryContainer}>
+        <FlatList
+          data={matchScoreHistory}
+          renderItem={({item}) => <Text style={styles.matchHistoryText}>{item.p1GamesWon} - {item.p2GamesWon}</Text>}
+        />
       </View>
-       
+     
     </SafeAreaView>
   );
 }
@@ -133,13 +135,19 @@ const styles = StyleSheet.create({
     flexDirection: 'colum'
   },  
 
+  matchHistoryContainer: {
+    flex: 0.1,
+    flexDirection: 'colum',
+    gap: 10,
+  }, 
+
   matchHistoryText: {
     ...Platform.select({
       android: {
         fontSize: 20,
       },
       ios: {
-        fontSize: Platform.isPad ? 50 : 20,
+        fontSize: Platform.isPad ? 20 : 20,
       },
       default: {
         // other platforms, web for example

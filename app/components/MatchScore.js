@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
       },
       ios: {
-        fontSize: Platform.isPad ? 50 : 20,
+        fontSize: Platform.isPad ? 20 : 20,
+        margin: Platform.isPad ? 0 : 0,
       },
       default: {
         // other platforms, web for example
