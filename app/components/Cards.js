@@ -3,15 +3,23 @@ import { React, useState } from 'react'
 
 import colours from '../config/colours'
 
+import Timeout from './Timeout'
+
 const yellowCardPressed = false;
 const redCardPressed = false;
 const timeoutPressed = true;
+
 
 export default function Cards({player, setPlayer}) {
 
   const [redCardPressed, setRedCardPressed] = useState(player.redCarded);
   const [yellowCardPressed, setYellowCardPressed] = useState(player.yellowCarded);
   const [timeoutPressed, setTimeoutPressed] = useState(player.tookTimeout);
+
+  const [timeoutInProgress, setTimeoutInProgress] = useState(false);
+
+  const [timeoutStatus, setTimeoutStatus] = useState("Not Taken");
+
 
   const handleOnPressRedCard = () => {
 
@@ -25,22 +33,31 @@ export default function Cards({player, setPlayer}) {
 
   };
 
- const handleOnPressYellowCard = () => {
+  const handleOnPressYellowCard = () => {
   
-  setYellowCardPressed(yellowCardPressed => !yellowCardPressed)
+    setYellowCardPressed(yellowCardPressed => !yellowCardPressed)
 
-  setPlayer(previousState => {
-    return { ...previousState,
-      yellowCarded: !player.yellowCarded
-    }
-  });
+    setPlayer(previousState => {
+      return { ...previousState,
+        yellowCarded: !player.yellowCarded
+      }
+    });
 
-};
+  };
  
  const handleOnPressTimeout = () => { 
   
-  setTimeoutPressed(timeoutPressed => !timeoutPressed)
+  if (!timeoutPressed) {
+    setTimeoutStatus(timeoutStatus => "Started");
+  } else if (timeoutInProgress) {
+    setTimeoutStatus(timeoutStatus => "Over");
+  }  
 
+  setTimeoutPressed(timeoutPressed => !timeoutPressed);
+
+  // setTimeoutInProgress(timeoutInProgress => true);
+
+  // TO-DO - review
   setPlayer(previousState => {
     return { ...previousState,
       tookTimeout: !player.tookTimeout
@@ -52,20 +69,30 @@ export default function Cards({player, setPlayer}) {
     
     <View style={styles.container}>
       
-      <Pressable style={styles.yellowCardContainer} onPress={handleOnPressYellowCard}>
-        <View style={[styles.yellowCardContainer, {backgroundColor: yellowCardPressed ? 'yellow' : colours.scoreboardBackground}]} /> 
-      </Pressable>
+      { (timeoutInProgress == false) && (timeoutStatus != "Started") &&
+        <Pressable style={styles.yellowCardContainer} onPress={handleOnPressYellowCard}>
+          <View style={[styles.yellowCardContainer, {backgroundColor: yellowCardPressed ? 'yellow' : colours.scoreboardBackground}]} /> 
+        </Pressable>
+      }
 
-      
-      <Pressable style={styles.redCardContainer} onPress={handleOnPressRedCard}>
-        <View style={[styles.redCardContainer, {backgroundColor: redCardPressed ? 'red' : colours.scoreboardBackground}]} /> 
-      </Pressable>
+      { (timeoutInProgress == false) && (timeoutStatus != "Started") &&
+        <Pressable style={styles.redCardContainer} onPress={handleOnPressRedCard}>
+          <View style={[styles.redCardContainer, {backgroundColor: redCardPressed ? 'red' : colours.scoreboardBackground}]} /> 
+        </Pressable>
+      }
 
-      <Pressable style={styles.timeoutCardContainer} onPress={handleOnPressTimeout}>
-        <View style={styles.timeoutCardContainer}> 
-          <Text style={[styles.timeoutText, {color: timeoutPressed ? colours.scoreboardBackground : 'white'}]} allowFontScaling>TIMEOUT</Text>
-        </View>
-      </Pressable>
+
+      { (timeoutInProgress == false) && (timeoutStatus != "Started") &&
+        <Pressable style={styles.timeoutCardContainer} onPress={handleOnPressTimeout}>
+          <View style={styles.timeoutCardContainer}> 
+            <Text style={[styles.timeoutText, {color: timeoutPressed ? colours.scoreboardBackground : 'white'}]} allowFontScaling>TIMEOUT</Text>
+          </View>
+        </Pressable>
+      }
+
+      <View>
+        {(timeoutPressed) && (timeoutStatus == "Started") && <Timeout timeoutStatus={timeoutStatus} setTimeoutStatus={setTimeoutStatus}/>}
+      </View>
 
     </View>
   )
