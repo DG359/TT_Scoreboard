@@ -91,7 +91,8 @@ export default function Cards({player, setPlayer}) {
       }
 
       <View>
-        {(timeoutPressed) && (timeoutStatus == "Started") && <Timeout timeoutStatus={timeoutStatus} setTimeoutStatus={setTimeoutStatus}/>}
+        {(timeoutPressed) && (timeoutStatus == "Started") && 
+        <Timeout style={styles.timeoutClockContainer} timeoutStatus={timeoutStatus} setTimeoutStatus={setTimeoutStatus}/>}
       </View>
 
     </View>
@@ -115,6 +116,15 @@ const styles = StyleSheet.create({
 
     timeoutCardContainer: {
       backgroundColor: timeoutPressed ? 'white' : colours.scoreboardBackground,
+      borderColor: 'white',
+      borderWidth: 2,
+      justifyContent: 'center',
+      flex: 1,
+    },
+
+
+    timeoutClockContainer: {
+      backgroundColor:  'blue',
       borderColor: 'white',
       borderWidth: 2,
       justifyContent: 'center',
