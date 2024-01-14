@@ -30,10 +30,12 @@ function HomeScreen({navigation}) {
   );
 }
 
-function SetupScreen() {
+function SetupScreen(navigation, route) {
   
+console.log(">>>Setup: ", route.params);
+
   return (
-    <Setup />
+    <Setup matchConfig={route.params.matchConfig} setMatchConfig={route.params.setMatchConfig}/>
   )
 }
   
@@ -57,7 +59,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 
   const [matchConfig, setMatchConfig] = useState({
-    p1Name: "Player-1",
+    p1Name: "DAVE",
     p1End:  "left",
     p2Name: "Player-2",
     p1End:  "right",
@@ -65,12 +67,18 @@ export default function App() {
     soundOn: false
   });  
 
+  console.log(">>>SETUP:", matchConfig);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }}/>
         <Stack.Screen name="Scoreboard" component={ScoreboardScreen} options={{ title: 'Castlewarden TT CLub'}}/>
-        <Stack.Screen name="Setup" component={SetupScreen} options={{ title: 'Setup' }}/>
+        <Stack.Screen 
+          name="Setup" 
+          component={SetupScreen}
+          initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
+          options={{ title: 'Setup' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

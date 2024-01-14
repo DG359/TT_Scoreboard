@@ -41,7 +41,7 @@ export default function Scoreboard() {
     {key: 0, p1GamesWon: "P1", p2GamesWon: "P2"}
   ]);
 
-  const bestOf = 5;                                         // number of games that must be won to take the match
+  const bestOf = 5;                                         // max number of games in the match
   const [serverIndex, setServerIndex] = useState(0);        // 0 = server on left; 1 = on right
   const [matchStarted, setMatchStarted] = useState(false);  // records if match is stated so as to prevent a change of server
 

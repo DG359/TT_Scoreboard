@@ -40,7 +40,11 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
 
         // check it there's a change of server
         if (changeOfServerRequired() === true) {
-          setServerIndex(serverIndex => !serverIndex)
+          if (serverIndex == 0) {
+            setServerIndex(serverIndex => 1);
+          } else {
+            setServerIndex(serverIndex => 0);
+          }
         }
 
         // check if a there's a change of ends required in final game
@@ -61,8 +65,25 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
     }
   }
 
-  const handleOnPressRightScore = () => {
+  const handleOnLongPressLeftScore = () => {
+    // long press will decrement the score, provided the game is not already over
+    if (!gameOver) {
 
+      if (leftScore > 0) {
+        // check it there was a change of server
+        if (revertServerRequired() === true) {
+          if (serverIndex == 0) {
+            setServerIndex(serverIndex => 1);
+          } else {
+            setServerIndex(serverIndex => 0);
+          }
+        }
+        setLeftScore(leftScore => leftScore - 1)
+      }
+    }
+  }
+
+  const handleOnPressRightScore = () => {
     // only handle the press if game is not already over
     if (!gameOver) {
 
@@ -85,7 +106,11 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
 
         // check it there's a change of server
         if (changeOfServerRequired() === true) {
-          setServerIndex(serverIndex => !serverIndex)
+          if (serverIndex == 0) {
+            setServerIndex(serverIndex => 1);
+          } else {
+            setServerIndex(serverIndex => 0);
+          }
         }
 
         // check if a there's a change of ends required in final game
@@ -102,6 +127,25 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
       // record the the match has started
       if (!matchStarted) {
         setMatchStarted(matchStarted => true)
+      }
+    }
+  }
+
+  const handleOnLongPressRightScore = () => {
+
+    // long press will decrement the score, provided the game is not already over
+    if (!gameOver) {
+
+      if (rightScore > 0) {
+        // check it there was a change of server
+        if (revertServerRequired() === true) {
+          if (serverIndex == 0) {
+            setServerIndex(serverIndex => 1);
+          } else {
+            setServerIndex(serverIndex => 0);
+          }
+        }
+        setRightScore(rightScore => rightScore - 1)
       }
     }
   }
@@ -179,6 +223,12 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
   const changeOfServerRequired = () => {
     return ((((leftScore + rightScore) % 2) == 0) || (leftScore >= 10) || (rightScore >= 10))? false : true
   }
+
+  // used to check it you need to changed sever after a log press to correct a score
+  const revertServerRequired = () => {
+    return (((leftScore + rightScore) % 2) == 0) ? true : false
+  }
+
 
   const changeOfEndsRequired = (whichEndJustScored) => {
     
@@ -261,13 +311,17 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
   return (
     <View style={styles.container}>
             
-      <Pressable style={styles.leftGameScoreContainer} onPress={handleOnPressLeftScore}>
+      <Pressable style={styles.leftGameScoreContainer} 
+        onPress={handleOnPressLeftScore}
+        onLongPress={handleOnLongPressLeftScore}>
         <View style={styles.leftGameScoreContainer}> 
           <Text style={styles.gameText}>{leftScore}</Text>
         </View>
       </Pressable>
 
-      <Pressable style={styles.rightGameScoreContainer} onPress={handleOnPressRightScore}>
+      <Pressable style={styles.rightGameScoreContainer} 
+        onPress={handleOnPressRightScore}
+        onLongPress={handleOnLongPressRightScore}>
         <View style={styles.rightGameScoreContainer}>
           <Text style={styles.gameText}>{rightScore}</Text>
         </View>

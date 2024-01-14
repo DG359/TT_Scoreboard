@@ -4,16 +4,18 @@ import { TextInput } from "react-native-paper";
 import DropDownPicker from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
 
-export default function Setup() {
+export default function Setup({matchConfig, setMatchConfig}) {
 
-  const [matchConfig, setMatchConfig] = useState({
-    p1Name: "Player-1",
-    p1End:  "left",
-    p2Name: "Player-2",
-     p1End:  "right",
-    bestof: 5,
-    soundOn: false
-  });
+ // const [matchConfig, setMatchConfig] = useState({
+ //   p1Name: "Player-1",
+ //   p1End:  "left",
+ //   p2Name: "Player-2",
+ //   p1End:  "right",
+ //   bestof: 5,
+ //   soundOn: false
+ // });
+
+ console.log(">>>>SETUP>>", matchConfig);
 
     const [p1Name, setP1Name] = useState("Player 1")
     const [p2Name, setP2Name] = useState("Player 2")
@@ -79,9 +81,7 @@ export default function Setup() {
       } else {
 
       }
-      
-      console.log("Text entered: " + text + "<<<>>" + matchConfig.p1Name + "<<<>>" + matchConfig.p2Name);
-    }
+          }
 
     const handleOnClose = () => {
  
@@ -89,9 +89,7 @@ export default function Setup() {
           return { ...previousState,
             bestof: value }
         });
-      
-      console.log("Text entered: " + value + "<<<>>" + matchConfig.p1Name + "<<<>>" + matchConfig.p2Name + "<<<>>" + matchConfig.bestof);
-    }
+          }
 
 
     return (
@@ -116,13 +114,14 @@ export default function Setup() {
              style={styles.switch}
              trackColor={{false: '#000000', true: '#000000'}}
              thumbColor={p1PlaysRightEnd ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
+              // ios_backgroundColor="#3e3e3e"
               onValueChange={toggleEnds}
               value={p1PlaysRightEnd}
            />
 
             <Text> Play Right End</Text>
           </View>
+          
         </View>
        
         <View style={styles.playerContainer}>
@@ -142,8 +141,8 @@ export default function Setup() {
             <Switch
               style={styles.switch}
               trackColor={{false: '#000000', true: '#000000'}}
-              thumbColor={p2PlaysRightEnd ? '#000000' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
+              thumbColor={p1PlaysRightEnd ? '#f5dd4b' : '#f4f3f4'}
+              // ios_backgroundColor="#3e3e3e"
               onValueChange={toggleEnds}
               value={p2PlaysRightEnd}
             />
