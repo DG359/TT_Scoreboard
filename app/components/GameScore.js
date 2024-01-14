@@ -307,6 +307,88 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
     resetMatchScore();
 }
 
+const revertToPreviousGameScore = () => {
+
+  setGameOver(gameOver => false);
+  setMatchOver(matchOver => false);
+
+  // revert server
+  if (revertServerRequired() === true) {
+    if (serverIndex == 0) {
+      setServerIndex(serverIndex => 1);
+    } else {
+      setServerIndex(serverIndex => 0);
+    }
+  }
+
+  if (leftScore > rightScore) {
+
+    // revert to the game's previous score
+    setLeftScore(leftScore => leftScore - 1);
+
+    // revet to the match's previous score
+    if (player1.playingEnd == "left") {
+      setPlayer1(previousState => {
+        return { ...previousState,
+          gamesWon: player1.gamesWon - 1 }
+      });
+    } else {
+      setPlayer2(previousState => {
+        return { ...previousState,
+          gamesWon: player2.gamesWon - 1 }
+      });
+    }
+  } else {
+    // revert to the game's previous score
+    setRightScore(rightScore => rightScore - 1); 
+
+    // revet to the match's previous score
+    if (player1.playingEnd == "right") {
+      setPlayer1(previousState => {
+        return { ...previousState,
+          gamesWon: player1.gamesWon - 1 }
+      });
+    } else {
+      setPlayer2(previousState => {
+        return { ...previousState,
+          gamesWon: player2.gamesWon - 1 }
+      });
+    }
+  }
+}
+
+const correctMatchScore = (winningEnd) => {
+
+  if (player1.playingEnd == winningEnd) {
+    
+    if ((player1.gamesWon + 1) > (bestOf / 2)) {
+      setMatchOver(matchOver => true)
+    }
+    else {
+      setGameOver(gameOver => true)
+    }
+
+    setPlayer1(previousState => {
+      return { ...previousState,
+        gamesWon: player1.gamesWon + 1 }
+    });
+  } else {
+         
+    if ((player2.gamesWon + 1) > (bestOf / 2)) {
+      setMatchOver(matchOver => true)
+    }
+    else {
+      setGameOver(gameOver => true)
+    }
+    
+    setPlayer2(previousState => {
+      return { ...previousState,
+        gamesWon: player2.gamesWon + 1 }
+    });
+  }
+}
+
+
 
   return (
     <View style={styles.container}>
@@ -334,12 +416,13 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
           message=""
           closeOnTouchOutside={false}
           closeOnHardwareBackPress={false}
-          showCancelButton={false}
+          showCancelButton={true}
           showConfirmButton={true}
-          cancelText=""
-          confirmText="Press to Play On"
-          confirmButtonColor="#DD6B55"
-          onCancelPressed={hideGameOverAlert}
+          cancelText="Cancel - Go Back"
+          confirmText="OK - Play On"
+          cancelButtonColor="red"
+          confirmButtonColor="blue"
+          onCancelPressed={revertToPreviousGameScore}
           onConfirmPressed={hideGameOverAlert}
         />
 
@@ -351,12 +434,13 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
           message=""
           closeOnTouchOutside={false}
           closeOnHardwareBackPress={false}
-          showCancelButton={false}
+          showCancelButton={true}
           showConfirmButton={true}
-          cancelText=""
-          confirmText="Press to Start a New Match"
-          confirmButtonColor="#DD6B55"
-          onCancelPressed={hideMatchOverAlert}
+          cancelText="Cancel - Go Back"
+          confirmText="OK - Play On"
+          cancelButtonColor="red"
+          confirmButtonColor="blue"
+          onCancelPressed={revertToPreviousGameScore}
           onConfirmPressed={hideMatchOverAlert}
         />  
 
