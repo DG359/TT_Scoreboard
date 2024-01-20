@@ -24,7 +24,10 @@
       }
     },
     "web": {
-      "favicon": "./app/assets/images/TTBall.png"
-    }
-  }
+      "favicon": "./app/assets/images/TTBall.png",
+      "bundler": "metro"
+    },
+    "sdkVersion": "49.0.0"
+  },
+  "name": "donewithit"
 }

@@ -45,7 +45,7 @@ function ScoreboardScreen() {
     p1End:  "left",
     p2Name: "Player-2",
     p1End:  "right",
-    bestof: 5,
+    bestof: 3,
     soundOn: false
   });  
 
@@ -63,7 +63,7 @@ export default function App() {
     p1End:  "left",
     p2Name: "Player-2",
     p1End:  "right",
-    bestof: 5,
+    bestof: 3,
     soundOn: false
   });  
 

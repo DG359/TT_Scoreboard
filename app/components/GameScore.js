@@ -78,10 +78,18 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
             setServerIndex(serverIndex => 0);
           }
         }
-        setLeftScore(leftScore => leftScore - 1)
+
+        // check if playing ends should be swaped back
+        if (needToSwapBack("left") === true) {
+          swapEnds();
+          swapGameScores("right");
+          setSwapedEndsInFinalGame(swapedEndsInFinalGame => false);
+        }
+        setLeftScore(leftScore => leftScore - 1);
       }
     }
   }
+
 
   const handleOnPressRightScore = () => {
     // only handle the press if game is not already over
@@ -145,6 +153,12 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
             setServerIndex(serverIndex => 0);
           }
         }
+        // check if playing ends should be swaped back
+        if (needToSwapBack("right") === true) {
+          swapEnds();
+          swapGameScores("left");
+          setSwapedEndsInFinalGame(swapedEndsInFinalGame => false);
+        }
         setRightScore(rightScore => rightScore - 1)
       }
     }
@@ -181,6 +195,7 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
     }
   }
 
+  // swap playing ends
   const swapEnds = () => {
 
     if (player1.playingEnd == "left") {
@@ -224,12 +239,24 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
     return ((((leftScore + rightScore) % 2) == 0) || (leftScore >= 10) || (rightScore >= 10))? false : true
   }
 
-  // used to check it you need to changed sever after a log press to correct a score
+  // used to check if you need to changed sever after a log press to correct a score
   const revertServerRequired = () => {
     return (((leftScore + rightScore) % 2) == 0) ? true : false
   }
 
+  // check if there is a need to swap playing ends back
+  const needToSwapBack = (endScoreReduced) => {
 
+    if ((endScoreReduced == "left") && swapedEndsInFinalGame) {
+      return ((leftScore == 5) && (rightScore < 5)) ? true : false;
+    } else if ((endScoreReduced == "right") && swapedEndsInFinalGame) {
+      return ((rightScore == 5) && (leftScore < 5)) ? true : false;
+    } else {
+      return false;
+    }
+  }
+
+  // check if it's time to change ends in the final game
   const changeOfEndsRequired = (whichEndJustScored) => {
     
     if (whichEndJustScored == "right") {
