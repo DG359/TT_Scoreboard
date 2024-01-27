@@ -6,6 +6,8 @@ import colours from '../config/colours'
 export default function Server({serverIndex, setServerIndex, matchStarted, player1, setPlayer1, player2, setPlayer2}) {
 
     const handleSetServer = () => {
+        console.log("Server Index: ", serverIndex);
+
         if (!matchStarted) {
             setServerIndex(serverIndex => !serverIndex);
 
@@ -58,6 +60,7 @@ export default function Server({serverIndex, setServerIndex, matchStarted, playe
 const styles = StyleSheet.create({
 
     ballContainer: {
+        resizeMode: 'cover',
         width: 50,
         height: 50,
       },
@@ -81,5 +84,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
       },
+
+    textContainer: {
+        color: 'white',
+    }
     })  
 

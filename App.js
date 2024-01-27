@@ -1,10 +1,11 @@
-
+//import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { React, useState } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Button from './app/components/Button';
 import Scoreboard from './app/assets/screens/Scoreboard';
@@ -54,7 +55,11 @@ function ScoreboardScreen() {
   );
 }
 
+
 const Stack = createNativeStackNavigator();
+
+// const Drawer = createDrawerNavigator();
+
 
 export default function App() {
 
@@ -67,11 +72,13 @@ export default function App() {
     soundOn: false
   });  
 
-  console.log(">>>SETUP:", matchConfig);
+  const [useDrawerNavigation, setUseDrawerNavigation] = useState(false);
+
+ // console.log(">>>SETUP:", matchConfig);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      {(useDrawerNavigation == false) && <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }}/>
         <Stack.Screen name="Scoreboard" component={ScoreboardScreen} options={{ title: 'Castlewarden TT CLub'}}/>
         <Stack.Screen 
@@ -79,7 +86,7 @@ export default function App() {
           component={SetupScreen}
           initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
           options={{ title: 'Setup' }}/>
-      </Stack.Navigator>
+      </Stack.Navigator>}
     </NavigationContainer>
   );
 }
