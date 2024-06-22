@@ -1,13 +1,14 @@
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native'
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import AwesomeAlert from 'react-native-awesome-alerts';
+import * as Speech from 'expo-speech';
 
 import colours from '../config/colours'
 
-let nextId = 1;     // array index for match history
+let nextMatchId = 1;     // array index for match history
+let nextGameId = 1;     // array index for game history
 
-
-export default function GameScore({matchScore, setMatchScore, serverIndex, setServerIndex, matchStarted, setMatchStarted, player1, setPlayer1, player2, setPlayer2, matchScoreHistory, setMatchScoreHistory, bestOf}) {
+export default function GameScore({matchScore, setMatchScore, serverIndex, setServerIndex, matchStarted, setMatchStarted, player1, setPlayer1, player2, setPlayer2, matchScoreHistory, setMatchScoreHistory, gameScoreHistory, setGameScoreHistory, bestOf, volumeOn}) {
 
   const [leftScore, setLeftScore] = useState(0);
   const [rightScore, setRightScore] = useState(0);
@@ -16,10 +17,37 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
   const [matchOver, setMatchOver] = useState(false);
   const [swapedEndsInFinalGame, setSwapedEndsInFinalGame] = useState(false);
 
+  const speak = (thingToSay) => {
+    if (volumeOn) {
+      Speech.speak(thingToSay);
+    }
+  };
+
+  useEffect(() => {
+    // run something every time score changes
+    
+    if (gameOver) {
+      speak("Game, Over");
+    } 
+    else {
+
+      if (serverIndex == 1)
+        {
+          speak(rightScore.toString() + "," + leftScore.toString());
+        }
+      else {
+        speak(leftScore.toString() + "," + rightScore.toString());
+      }
+    }
+  }, [leftScore, rightScore]); // <-- dependency array
+
   const handleOnPressLeftScore = () => {
 
     // only handle the press if game is not already over
     if (!gameOver) {
+
+      // record Game Score
+      saveGameScoreHistory();
 
       // check upfront if adding 1 to the score will result in a change of server or game over
       // since setting the new score is an asynchronus update, it may not be applied
@@ -51,6 +79,7 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
         if (changeOfEndsRequired("left") === true) {
           swapEnds();
           swapGameScores("left");
+          speak("Change ends");
         }
       }
 
@@ -95,6 +124,9 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
     // only handle the press if game is not already over
     if (!gameOver) {
 
+      // record Game Score
+      saveGameScoreHistory();
+
       // check upfront if adding 1 to the score will result in a change of server or game over
       // since setting the new score is an asynchronus update, it may not be applied
 
@@ -111,7 +143,6 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
         updateMatchScore("right");
       } 
       else {
-
         // check it there's a change of server
         if (changeOfServerRequired() === true) {
           if (serverIndex == 0) {
@@ -125,6 +156,7 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
         if (changeOfEndsRequired("right") === true) {
           swapEnds();
           swapGameScores("right");
+          speak("Change ends");
         }
       }
 
@@ -317,17 +349,38 @@ export default function GameScore({matchScore, setMatchScore, serverIndex, setSe
 
     setMatchScoreHistory([
       ...matchScoreHistory,
-      {key: nextId++, p1GamesWon: player1.gamesWon, p2GamesWon: player2.gamesWon}
+      {key: nextMatchId++, p1GamesWon: player1.gamesWon, p2GamesWon: player2.gamesWon}
     ]);
   }
 
+  const saveGameScoreHistory = () => {
+
+    let game = (gameOver || matchOver) ? matchScore.leftGamesWon + matchScore.rightGamesWon : matchScore.leftGamesWon + matchScore.rightGamesWon + 1;
+
+    if (player1.playingEnd == "left") {
+      setGameScoreHistory([
+        ...gameScoreHistory,
+        {key: nextGameId++, matchKey: matchScoreHistory.key, game: game, p1PointsFor: leftScore, p2PointsFor: rightScore}
+      ]);
+    } else {
+      setGameScoreHistory([
+        ...gameScoreHistory,
+        {key: nextGameId++, matchKey: matchScoreHistory.key, game: game, p1PointsFor: rightScore, p2PointsFor: leftScore}
+      ]);
+    }
+  }
+
+
   const hideGameOverAlert = () => {  
       setGameOver(gameOver => false);
+      saveGameScoreHistory();
       swapEnds();
       resetGameScore();
   }
 
   const hideMatchOverAlert = () => {  
+    setGameOver(gameOver => false);
+    saveGameScoreHistory();
     setMatchOver(MatchOver => false);
     saveMatchScoreHistory();
     swapEnds();

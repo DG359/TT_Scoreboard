@@ -1,0 +1,447 @@
+
+up to date, audited 2187 packages in 40s
+
+167 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+ansi-html  <0.0.8
+Severity: high
+Uncontrolled Resource Consumption in ansi-html - https://github.com/advisories/GHSA-whgm-jr23-g3j9
+fix available via `npm audit fix`
+node_modules/ansi-html
+  @pmmmwh/react-refresh-webpack-plugin  <=0.5.0-rc.6
+  Depends on vulnerable versions of ansi-html
+  node_modules/@expo/webpack-config/node_modules/@pmmmwh/react-refresh-webpack-plugin
+    @expo/webpack-config  *
+    Depends on vulnerable versions of @expo/config
+    Depends on vulnerable versions of @pmmmwh/react-refresh-webpack-plugin
+    Depends on vulnerable versions of css-loader
+    Depends on vulnerable versions of expo-pwa
+    Depends on vulnerable versions of mini-css-extract-plugin
+    Depends on vulnerable versions of optimize-css-assets-webpack-plugin
+    Depends on vulnerable versions of postcss-safe-parser
+    Depends on vulnerable versions of react-dev-utils
+    Depends on vulnerable versions of semver
+    Depends on vulnerable versions of webpack
+    Depends on vulnerable versions of webpack-deep-scope-plugin
+    Depends on vulnerable versions of workbox-webpack-plugin
+    node_modules/@expo/webpack-config
+
+braces  <3.0.3
+Severity: high
+Uncontrolled resource consumption in braces - https://github.com/advisories/GHSA-grv7-fg5c-xmjg
+fix available via `npm audit fix`
+node_modules/fork-ts-checker-webpack-plugin/node_modules/braces
+node_modules/watchpack-chokidar2/node_modules/braces
+node_modules/webpack/node_modules/braces
+  chokidar  1.0.0-rc1 - 2.1.8
+  Depends on vulnerable versions of anymatch
+  Depends on vulnerable versions of braces
+  Depends on vulnerable versions of glob-parent
+  Depends on vulnerable versions of readdirp
+  node_modules/watchpack-chokidar2/node_modules/chokidar
+    watchpack-chokidar2  *
+    Depends on vulnerable versions of chokidar
+    node_modules/watchpack-chokidar2
+      watchpack  1.7.2 - 1.7.5
+      Depends on vulnerable versions of watchpack-chokidar2
+      node_modules/watchpack
+  micromatch  0.2.0 - 3.1.10
+  Depends on vulnerable versions of braces
+  node_modules/fork-ts-checker-webpack-plugin/node_modules/micromatch
+  node_modules/watchpack-chokidar2/node_modules/micromatch
+  node_modules/webpack/node_modules/micromatch
+    anymatch  1.2.0 - 2.0.0
+    Depends on vulnerable versions of micromatch
+    node_modules/watchpack-chokidar2/node_modules/anymatch
+    fork-ts-checker-webpack-plugin  0.4.14 - 4.1.6
+    Depends on vulnerable versions of micromatch
+    node_modules/fork-ts-checker-webpack-plugin
+      react-dev-utils  0.5.2 - 12.0.0-next.60
+      Depends on vulnerable versions of browserslist
+      Depends on vulnerable versions of fork-ts-checker-webpack-plugin
+      Depends on vulnerable versions of immer
+      Depends on vulnerable versions of loader-utils
+      Depends on vulnerable versions of recursive-readdir
+      Depends on vulnerable versions of shell-quote
+      node_modules/react-dev-utils
+    readdirp  2.2.0 - 2.2.1
+    Depends on vulnerable versions of micromatch
+    node_modules/watchpack-chokidar2/node_modules/readdirp
+    webpack  4.0.0-alpha.0 - 5.0.0-rc.6
+    Depends on vulnerable versions of micromatch
+    Depends on vulnerable versions of terser-webpack-plugin
+    node_modules/webpack
+      mini-css-extract-plugin  <=0.9.0
+      Depends on vulnerable versions of webpack
+      node_modules/mini-css-extract-plugin
+      optimize-css-assets-webpack-plugin  <=1.3.2 || >=3.0.0
+      Depends on vulnerable versions of cssnano
+      Depends on vulnerable versions of webpack
+      node_modules/optimize-css-assets-webpack-plugin
+      terser-webpack-plugin  <=2.2.1
+      Depends on vulnerable versions of webpack
+      node_modules/webpack/node_modules/terser-webpack-plugin
+      webpack-deep-scope-plugin  >=1.3.5
+      Depends on vulnerable versions of webpack
+      node_modules/webpack-deep-scope-plugin
+
+browserslist  4.0.0 - 4.16.4
+Severity: moderate
+Regular Expression Denial of Service in browserslist - https://github.com/advisories/GHSA-w8qv-6jwh-64r5
+fix available via `npm audit fix`
+node_modules/react-dev-utils/node_modules/browserslist
+
+glob-parent  <5.1.2
+Severity: high
+glob-parent vulnerable to Regular Expression Denial of Service in enclosure regex - https://github.com/advisories/GHSA-ww39-953v-wcq6
+fix available via `npm audit fix`
+node_modules/watchpack-chokidar2/node_modules/glob-parent
+
+hoek  *
+Severity: high
+hoek subject to prototype pollution via the clone function. - https://github.com/advisories/GHSA-c429-5p7v-vgjp
+fix available via `npm audit fix`
+node_modules/hoek
+  joi  0.0.2 - 14.3.1
+  Depends on vulnerable versions of hoek
+  Depends on vulnerable versions of topo
+  node_modules/workbox-build/node_modules/joi
+    workbox-build  <=5.1.4
+    Depends on vulnerable versions of joi
+    Depends on vulnerable versions of lodash.template
+    node_modules/workbox-build
+      workbox-webpack-plugin  <=5.1.4
+      Depends on vulnerable versions of workbox-build
+      node_modules/workbox-webpack-plugin
+  topo  *
+  Depends on vulnerable versions of hoek
+  node_modules/topo
+
+immer  7.0.0 - 9.0.5
+Severity: critical
+Prototype Pollution in immer - https://github.com/advisories/GHSA-c36v-fmgq-m8hx
+Prototype Pollution in immer - https://github.com/advisories/GHSA-33f9-j839-rf8h
+fix available via `npm audit fix`
+node_modules/immer
+
+ip  *
+Severity: high
+ip SSRF improper categorization in isPublic - https://github.com/advisories/GHSA-2p57-rm9w-gvfp
+fix available via `npm audit fix --force`
+Will install react-native@0.72.14, which is outside the stated dependency range
+node_modules/ip
+  @react-native-community/cli-doctor  <=10.2.5 || 11.0.0-alpha.0 - 11.4.0 || 12.0.0-alpha.0 - 12.3.5 || 13.0.0 - 13.5.2
+  Depends on vulnerable versions of ip
+  node_modules/@react-native-community/cli-doctor
+    @react-native-community/cli  4.13.0 - 9.3.5 || 11.0.2 - 11.4.0 || 12.0.0-alpha.0 - 12.3.5 || 13.0.0 - 13.5.2
+    Depends on vulnerable versions of @react-native-community/cli-doctor
+    Depends on vulnerable versions of @react-native-community/cli-hermes
+    node_modules/@react-native-community/cli
+      react-native  <=0.0.0-20221027-2059-ba5454c42 || 0.69.0-rc.0 - 0.70.15 || 0.72.0-rc.0 - 0.72.10 || 0.73.0-nightly-20230506-1af868c52 - 0.73.4 || 0.74.0-nightly-20231003-5dedf277c - 0.74.0-rc.9 || >=0.75.0-nightly-20240221-a1171f79f
+      Depends on vulnerable versions of @react-native-community/cli
+      node_modules/react-native
+  @react-native-community/cli-hermes  <=10.2.0 || 11.0.0-alpha.0 - 11.4.0 || 12.0.0-alpha.0 - 12.3.5 || 13.0.0 - 13.5.2
+  Depends on vulnerable versions of ip
+  node_modules/@react-native-community/cli-hermes
+
+loader-utils  2.0.0 - 2.0.3
+Severity: critical
+Prototype pollution in webpack loader-utils - https://github.com/advisories/GHSA-76p3-8jx3-jpfq
+loader-utils is vulnerable to Regular Expression Denial of Service (ReDoS) via url variable - https://github.com/advisories/GHSA-3rfm-jhwj-7488
+loader-utils is vulnerable to Regular Expression Denial of Service (ReDoS) - https://github.com/advisories/GHSA-hhq3-ff78-jv3g
+fix available via `npm audit fix`
+node_modules/react-dev-utils/node_modules/loader-utils
+
+lodash.template  *
+Severity: high
+Command Injection in lodash - https://github.com/advisories/GHSA-35jh-r3h4-6jhm
+fix available via `npm audit fix`
+node_modules/lodash.template
+
+minimatch  <3.0.5
+Severity: high
+minimatch ReDoS vulnerability - https://github.com/advisories/GHSA-f8q6-p94x-37v3
+fix available via `npm audit fix`
+node_modules/recursive-readdir/node_modules/minimatch
+  recursive-readdir  1.2.0 - 2.2.2
+  Depends on vulnerable versions of minimatch
+  node_modules/recursive-readdir
+
+nth-check  <2.0.1
+Severity: high
+Inefficient Regular Expression Complexity in nth-check - https://github.com/advisories/GHSA-rp65-9cf3-cjxr
+fix available via `npm audit fix`
+node_modules/svgo/node_modules/nth-check
+  css-select  <=3.1.0
+  Depends on vulnerable versions of nth-check
+  node_modules/svgo/node_modules/css-select
+    svgo  1.0.0 - 1.3.2
+    Depends on vulnerable versions of css-select
+    node_modules/svgo
+      postcss-svgo  <=5.0.0-rc.2
+      Depends on vulnerable versions of postcss
+      Depends on vulnerable versions of svgo
+      node_modules/postcss-svgo
+
+phin  <3.7.1
+Severity: moderate
+phin may include sensitive headers in subsequent requests after redirect - https://github.com/advisories/GHSA-x565-32qp-m3vf
+fix available via `npm audit fix --force`
+Will install expo@51.0.12, which is a breaking change
+node_modules/phin
+  @jimp/core  <=0.21.4--canary.1163.d07ed6254d130e2995d24101e93427ec091016e6.0
+  Depends on vulnerable versions of phin
+  node_modules/@jimp/core
+    @jimp/custom  <=0.21.4--canary.1163.d07ed6254d130e2995d24101e93427ec091016e6.0
+    Depends on vulnerable versions of @jimp/core
+    node_modules/@jimp/custom
+      jimp  >=0.3.6-alpha.5
+      Depends on vulnerable versions of @jimp/custom
+      Depends on vulnerable versions of @jimp/plugins
+      node_modules/jimp
+        @expo/image-utils  <=0.0.1-canary-20240109-93608d8 || 0.2.14 - 0.4.2
+        Depends on vulnerable versions of jimp
+        Depends on vulnerable versions of semver
+        node_modules/@expo/cli/node_modules/@expo/image-utils
+        node_modules/@expo/image-utils
+        node_modules/@expo/prebuild-config/node_modules/@expo/image-utils
+          @expo/cli  <=0.0.0-canary-20231123-1b19f96-4 || 0.0.1-canary-20231125-d600e44 - 0.18.0
+          Depends on vulnerable versions of @expo/image-utils
+          Depends on vulnerable versions of @expo/prebuild-config
+          node_modules/@expo/cli
+            expo  50.0.0-alpha.0 - 50.0.19
+            Depends on vulnerable versions of @expo/cli
+            node_modules/expo
+          @expo/prebuild-config  <=7.0.0-beta.0
+          Depends on vulnerable versions of @expo/image-utils
+          node_modules/@expo/prebuild-config
+          expo-pwa  >=0.0.59-alpha.0
+          Depends on vulnerable versions of @expo/config
+          Depends on vulnerable versions of @expo/image-utils
+          node_modules/expo-pwa
+  load-bmfont  >=1.4.0
+  Depends on vulnerable versions of phin
+  node_modules/load-bmfont
+    @jimp/plugin-print  >=0.4.0
+    Depends on vulnerable versions of load-bmfont
+    node_modules/@jimp/plugin-print
+      @jimp/plugins  >=0.4.0
+      Depends on vulnerable versions of @jimp/plugin-print
+      node_modules/@jimp/plugins
+
+postcss  <8.4.31
+Severity: moderate
+PostCSS line return parsing error - https://github.com/advisories/GHSA-7fh5-64p2-3v2j
+fix available via `npm audit fix`
+node_modules/postcss
+  css-declaration-sorter  <=5.1.2
+  Depends on vulnerable versions of postcss
+  node_modules/css-declaration-sorter
+  css-loader  0.15.0 - 4.3.0
+  Depends on vulnerable versions of icss-utils
+  Depends on vulnerable versions of postcss
+  Depends on vulnerable versions of postcss-modules-extract-imports
+  Depends on vulnerable versions of postcss-modules-local-by-default
+  Depends on vulnerable versions of postcss-modules-scope
+  Depends on vulnerable versions of postcss-modules-values
+  node_modules/css-loader
+  cssnano  <=4.1.11
+  Depends on vulnerable versions of cssnano-preset-default
+  Depends on vulnerable versions of postcss
+  node_modules/cssnano
+  cssnano-preset-default  <=4.0.8
+  Depends on vulnerable versions of css-declaration-sorter
+  Depends on vulnerable versions of cssnano-util-raw-cache
+  Depends on vulnerable versions of postcss
+  Depends on vulnerable versions of postcss-calc
+  Depends on vulnerable versions of postcss-colormin
+  Depends on vulnerable versions of postcss-convert-values
+  Depends on vulnerable versions of postcss-discard-comments
+  Depends on vulnerable versions of postcss-discard-duplicates
+  Depends on vulnerable versions of postcss-discard-empty
+  Depends on vulnerable versions of postcss-discard-overridden
+  Depends on vulnerable versions of postcss-merge-longhand
+  Depends on vulnerable versions of postcss-merge-rules
+  Depends on vulnerable versions of postcss-minify-font-values
+  Depends on vulnerable versions of postcss-minify-gradients
+  Depends on vulnerable versions of postcss-minify-params
+  Depends on vulnerable versions of postcss-minify-selectors
+  Depends on vulnerable versions of postcss-normalize-charset
+  Depends on vulnerable versions of postcss-normalize-display-values
+  Depends on vulnerable versions of postcss-normalize-positions
+  Depends on vulnerable versions of postcss-normalize-repeat-style
+  Depends on vulnerable versions of postcss-normalize-string
+  Depends on vulnerable versions of postcss-normalize-timing-functions
+  Depends on vulnerable versions of postcss-normalize-unicode
+  Depends on vulnerable versions of postcss-normalize-url
+  Depends on vulnerable versions of postcss-normalize-whitespace
+  Depends on vulnerable versions of postcss-ordered-values
+  Depends on vulnerable versions of postcss-reduce-initial
+  Depends on vulnerable versions of postcss-reduce-transforms
+  Depends on vulnerable versions of postcss-svgo
+  Depends on vulnerable versions of postcss-unique-selectors
+  node_modules/cssnano-preset-default
+  cssnano-util-raw-cache  *
+  Depends on vulnerable versions of postcss
+  node_modules/cssnano-util-raw-cache
+  icss-utils  <=4.1.1
+  Depends on vulnerable versions of postcss
+  node_modules/icss-utils
+    postcss-modules-local-by-default  <=4.0.0-rc.4
+    Depends on vulnerable versions of icss-utils
+    Depends on vulnerable versions of postcss
+    node_modules/postcss-modules-local-by-default
+    postcss-modules-values  <=4.0.0-rc.5
+    Depends on vulnerable versions of icss-utils
+    Depends on vulnerable versions of postcss
+    node_modules/postcss-modules-values
+  postcss-calc  4.1.0 - 7.0.5
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-calc
+  postcss-colormin  <=4.0.3
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-colormin
+  postcss-convert-values  <=4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-convert-values
+  postcss-discard-comments  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-discard-comments
+  postcss-discard-duplicates  1.1.0 - 4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-discard-duplicates
+  postcss-discard-empty  1.1.0 - 4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-discard-empty
+  postcss-discard-overridden  <=4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-discard-overridden
+  postcss-merge-longhand  <=4.0.11
+  Depends on vulnerable versions of postcss
+  Depends on vulnerable versions of stylehacks
+  node_modules/postcss-merge-longhand
+  postcss-merge-rules  <=4.0.3
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-merge-rules
+  postcss-minify-font-values  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-minify-font-values
+  postcss-minify-gradients  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-minify-gradients
+  postcss-minify-params  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-minify-params
+  postcss-minify-selectors  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-minify-selectors
+  postcss-modules-extract-imports  <=2.0.0
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-modules-extract-imports
+  postcss-modules-scope  <=2.2.0
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-modules-scope
+  postcss-normalize-charset  <=4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-charset
+  postcss-normalize-display-values  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-display-values
+  postcss-normalize-positions  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-positions
+  postcss-normalize-repeat-style  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-repeat-style
+  postcss-normalize-string  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-string
+  postcss-normalize-timing-functions  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-timing-functions
+  postcss-normalize-unicode  <=4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-unicode
+  postcss-normalize-url  1.1.0 - 4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-url
+  postcss-normalize-whitespace  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-normalize-whitespace
+  postcss-ordered-values  <=4.1.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-ordered-values
+  postcss-reduce-initial  <=4.0.3
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-reduce-initial
+  postcss-reduce-transforms  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-reduce-transforms
+  postcss-safe-parser  <=4.0.2
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-safe-parser
+  postcss-unique-selectors  <=4.0.1
+  Depends on vulnerable versions of postcss
+  node_modules/postcss-unique-selectors
+  stylehacks  <=4.0.3
+  Depends on vulnerable versions of postcss
+  node_modules/stylehacks
+
+semver  7.0.0 - 7.5.1
+Severity: moderate
+semver vulnerable to Regular Expression Denial of Service - https://github.com/advisories/GHSA-c2qf-rxjj-qqgw
+fix available via `npm audit fix --force`
+Will install expo@51.0.12, which is a breaking change
+node_modules/@expo/cli/node_modules/@expo/image-utils/node_modules/semver
+node_modules/@expo/config/node_modules/semver
+node_modules/@expo/image-utils/node_modules/semver
+node_modules/@expo/prebuild-config/node_modules/@expo/image-utils/node_modules/semver
+node_modules/@expo/webpack-config/node_modules/semver
+  @expo/config  3.3.23-alpha.0 - 8.1.0
+  Depends on vulnerable versions of @expo/config-plugins
+  Depends on vulnerable versions of semver
+  node_modules/@expo/config
+
+shell-quote  <=1.7.2
+Severity: critical
+Improper Neutralization of Special Elements used in a Command in Shell-quote - https://github.com/advisories/GHSA-g4rg-993r-mgx7
+fix available via `npm audit fix`
+node_modules/react-dev-utils/node_modules/shell-quote
+
+xml2js  <0.5.0
+Severity: moderate
+xml2js is vulnerable to prototype pollution - https://github.com/advisories/GHSA-776f-qx25-q3cc
+No fix available
+node_modules/xml2js
+  @expo/config-plugins  <=7.1.0
+  Depends on vulnerable versions of @expo/plist
+  Depends on vulnerable versions of xml2js
+  node_modules/@expo/config-plugins
+  node_modules/@react-native-voice/voice/node_modules/@expo/config-plugins
+    @react-native-voice/voice  >=3.2.0
+    Depends on vulnerable versions of @expo/config-plugins
+    node_modules/@react-native-voice/voice
+
+xmldom  *
+Severity: critical
+xmldom allows multiple root nodes in a DOM - https://github.com/advisories/GHSA-crh6-fp67-6883
+Misinterpretation of malicious XML input - https://github.com/advisories/GHSA-5fg8-2547-mr8q
+No fix available
+node_modules/xmldom
+  @expo/plist  <=0.0.13
+  Depends on vulnerable versions of xmldom
+  node_modules/@expo/plist
+
+97 vulnerabilities (56 moderate, 34 high, 7 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.

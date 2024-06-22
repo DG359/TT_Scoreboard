@@ -15,19 +15,38 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dpg444.DoneWithIt"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.dpg444.DoneWithIt"
     },
     "web": {
       "favicon": "./app/assets/images/TTBall.png",
       "bundler": "metro"
     },
-    "sdkVersion": "49.0.0"
+    "plugins": [
+      [
+        "@react-native-voice/voice",
+        {
+          "microphonePermission": "Allow app to use your microphone?",
+          "speechRecognitionPermission": "Allow speech recognition?"
+        }
+      ]
+    ],
+    "owner": "dpg444",
+    "extra": {
+      "eas": {
+        "projectId": "c5427ffe-10bc-4b84-9972-6e5ad8558cbe"
+      }
+    }
   },
   "name": "donewithit"
 }

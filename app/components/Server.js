@@ -43,13 +43,15 @@ export default function Server({serverIndex, setServerIndex, matchStarted, playe
       
             <Pressable style={styles.leftServerContainer} onPress={handleSetServer}> 
                 <View style={styles.leftServerContainer}> 
-                    { (serverIndex == 0) && <Image style={styles.ballContainer} source={require('../assets/images/TTBall.png')} /> }
+                    {/* { (serverIndex == 0) && <Image style={styles.ballContainer} source={require('../assets/images/TTBall.png')} /> } */}
+                    { (serverIndex == 0) && <Text style={styles.textContainer}>X</Text>}
                 </View>
             </Pressable>
 
             <Pressable style={styles.rightServerContainer} onPress={handleSetServer}> 
                 <View style={styles.rightServerContainer}>     
-                    { (serverIndex == 1) && <Image style={styles.ballContainer} source={require('../assets/images/TTBall.png')} /> }
+                    {/*{ (serverIndex == 1) && <Image style={styles.ballContainer} source={require('../assets/images/TTBall.png')} /> } */}
+                    { (serverIndex == 1) && <Text style={styles.textContainer}>X</Text>}
                 </View>
             </Pressable>
 
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
 
     textContainer: {
         color: 'white',
+        fontSize: 35,
     }
     })  
 

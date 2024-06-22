@@ -3,21 +3,12 @@ import { SafeAreaView, StyleSheet, Switch, Text, View } from 'react-native';
 import { TextInput } from "react-native-paper";
 import DropDownPicker from 'react-native-dropdown-picker';
 import Constants from 'expo-constants';
+import Speech2Text from './Speech2Text';
 
 export default function Setup({matchConfig, setMatchConfig}) {
 
- // const [matchConfig, setMatchConfig] = useState({
- //   p1Name: "Player-1",
- //   p1End:  "left",
- //   p2Name: "Player-2",
- //   p1End:  "right",
- //   bestof: 5,
- //   soundOn: false
- // });
-
- console.log(">>>>SETUP>>", matchConfig);
-
-    const [p1Name, setP1Name] = useState("Player 1")
+    const [p1Name, setP1Name] = useState(matchConfig.p1Name);
+    console.log(">>>>Setup: P1Name set to:", p1Name);
     const [p2Name, setP2Name] = useState("Player 2")
 
     const [p1PlaysRightEnd, setP1PlaysRightEnd] = useState(false);
@@ -89,11 +80,12 @@ export default function Setup({matchConfig, setMatchConfig}) {
           return { ...previousState,
             bestof: value }
         });
-          }
+    }
 
 
     return (
       <View style={styles.container}>
+        <Speech2Text />
         <View>
 
         <View style={styles.playerContainer}>
@@ -142,6 +134,7 @@ export default function Setup({matchConfig, setMatchConfig}) {
               style={styles.switch}
               trackColor={{false: '#000000', true: '#000000'}}
               thumbColor={p1PlaysRightEnd ? '#f5dd4b' : '#f4f3f4'}
+              
               // ios_backgroundColor="#3e3e3e"
               onValueChange={toggleEnds}
               value={p2PlaysRightEnd}

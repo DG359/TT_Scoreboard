@@ -12,3 +12,11 @@ $ npm install @react-navigation/native-stack
 
 // Required for drawer navigation only if developing on MAC for IOS
 $ npx pod-install ios
+
+// Required to use web
+$
+
+// Adding speach to text
+$ npm install -g eas-cli
+$ npm install expo-dev-client
+$ npm install @react-native-voice/voice
