@@ -85,7 +85,7 @@ export default function Setup({matchConfig, setMatchConfig}) {
 
     return (
       <View style={styles.container}>
-        <Speech2Text />
+
         <View>
 
         <View style={styles.playerContainer}>
