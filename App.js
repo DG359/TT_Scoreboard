@@ -5,16 +5,19 @@ import { React, useState } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Button from './app/components/Button';
 import HomeScreen from './app/assets/screens/HomeScreen';
+import MatchHistory from './app/assets/screens/MatchHistory';
 import Scoreboard from './app/assets/screens/Scoreboard';
 import Setup from './app/components/Setup';
 import VoiceToText from './app/components/VoiceToText';
   
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+// const Stack = createNativeStackNavigator();
 // const Drawer = createDrawerNavigator();
 
 
@@ -34,45 +37,12 @@ function WelcomeScreen({navigation, route}) {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}> 
         <HomeScreen/>
-
-        <Button
-          title="Start"
-          onPress={() => {
-            // Pass and merge params back to home screen
-            navigation.navigate({
-              name: 'Scoreboard',
-              params: { matchConfig: route.params.matchConfig },
-              merge: true,
-            });
-          }}
-        />
-
-        <Button
-          title="Setup"
-
-          onPress={() => {
-            // Pass and merge params back to home screen
-            navigation.navigate({
-              name: 'Setup',
-              params: { matchConfig: route.params.matchConfig },
-              merge: true,
-            });
-          }}
-        />
       </View>
     </SafeAreaView>
   );
 }
 
 function SetupScreen({ navigation, route }) {
-  //const [matchConfig, setMatchConfig] = useState({
-  //  p1Name: "Player-11",
-  //  p1End:  "left",
-  //  p2Name: "Player-22",
-  //  p1End:  "right",
-  //  bestof: 3,
-  //  soundOn: false
-  //}); 
 
   console.log(">>>>SetupScreen: ",route.params.matchConfig);
 
@@ -81,17 +51,7 @@ function SetupScreen({ navigation, route }) {
     <View style={styles.container}> 
 
       <Setup matchConfig={route.params.matchConfig} setMatchConfig={route.params.setMatchConfig}/>
-      <Button
-        title="Done"
-        onPress={() => {
-          // Pass and merge params back to home screen
-          navigation.navigate({
-            name: 'Home',
-            params: { matchConfig: route.params.matchConfig },
-            merge: true,
-          });
-        }}
-      />
+
     </View>
   </SafeAreaView>
 
@@ -99,20 +59,15 @@ function SetupScreen({ navigation, route }) {
 }
   
 function ScoreboardScreen({ navigation, route }) {
-  //const [matchConfig, setMatchConfig] = useState({
-  //  p1Name: "Player-1",
-  //  p1End:  "left",
-  //  p2Name: "Player-2",
-  //  p1End:  "right",
-  //  bestof: 3,
-  //  soundOn: false
-  //});  
-
-
-  console.log(">>>>SetupScreen: ",route.params.matchConfig);
-
   return (
     <Scoreboard matchConfig={route.params.matchConfig} setMatchConfig={route.params.setMatchConfig}/>
+  );
+}
+
+  
+function MatchHistoryScreen({ navigation, route }) {
+  return (
+    <MatchHistory matchConfig={route.params.matchConfig} setMatchConfig={route.params.setMatchConfig}/>
   );
 }
 
@@ -125,12 +80,10 @@ export default function App() {
     p2Name: "Player-2",
     p1End:  "right",
     bestof: 5,
-    soundOn: false
+    voiceOn: false,
+    voiceRecognitionOn: false
   });  
 
-
-  const [volumeOn, setVolumeOn] = useState(false);
-  const [voiceRecognitionOn, setVoiceRecognitionOn] = useState(false);
   const [useDrawerNavigation, setUseDrawerNavigation] = useState(false);
   const navigationRef = useNavigationContainerRef(); 
 
@@ -139,45 +92,49 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {(useDrawerNavigation == false) && <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen 
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+                  if (route.name === 'Home') {
+                    iconName = focused ? 'home': 'home';
+                  } else if (route.name === 'Setup') {
+                    iconName = focused ? 'settings' : 'settings';
+                  } else if (route.name === 'Scoreboard') {
+                    iconName = focused ? 'play' : 'play'
+                  } else if (route.name === 'History') {
+                    iconName = focused ? 'archive' : 'archive'
+                  }
+                  
+                  // You can return any component that you like here!
+                  return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: 'blue',
+                tabBarInactiveTintColor: 'gray',
+              })}>
+        <Tab.Screen 
           name="Home" 
           component={WelcomeScreen} 
           initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
-          options={{ 
-            title: 'Home',
-            headerRight:  () => 
-            
-              <Pressable 
-                onPress={() => {
-                  console.log(">>>>nav ref", navigationRef.current);
-                  // TO-DO: determine why navigationRef.current is null at this point
-                  navigationRef.current && navigationRef.current.navigate({
-                    name: 'Setup',
-                    params: { matchConfig: route.params.matchConfig },
-                    merge: true,
-                  });
-                }}
-              >
-                <Ionicons name="settings" size={24} color="black" />
-              </Pressable>
-            
-
-          }}/>
-        <Stack.Screen
+          options={{ title: 'Home' }}/>
+        <Tab.Screen
           name="Scoreboard" 
           component={ScoreboardScreen}
           initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
-          options={{ title: 'Castlewarden TT CLub',
+          options={{ title: 'Play',
           }}/>
-
-
-        <Stack.Screen 
+        <Tab.Screen
+          name="History" 
+          component={MatchHistoryScreen}
+          initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
+          options={{ title: 'History',
+          }}/>
+        <Tab.Screen 
           name="Setup" 
           component={SetupScreen}
           initialParams={{ matchConfig: matchConfig,  setMatchConfig:setMatchConfig}}
           options={{ title: 'Setup' }}/>
-      </Stack.Navigator>}
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

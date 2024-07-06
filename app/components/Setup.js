@@ -1,14 +1,16 @@
 import { React, useState } from 'react'
-import { SafeAreaView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { TextInput } from "react-native-paper";
 import DropDownPicker from 'react-native-dropdown-picker';
+
 import Constants from 'expo-constants';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 import Speech2Text from './Speech2Text';
 
 export default function Setup({matchConfig, setMatchConfig}) {
-
+    
     const [p1Name, setP1Name] = useState(matchConfig.p1Name);
-    console.log(">>>>Setup: P1Name set to:", p1Name);
     const [p2Name, setP2Name] = useState("Player 2")
 
     const [p1PlaysRightEnd, setP1PlaysRightEnd] = useState(false);
@@ -24,7 +26,10 @@ export default function Setup({matchConfig, setMatchConfig}) {
       {label: '7', value: 7},
     ]);
 
-    const [soundOn, setSoundOn] = useState(false);
+    const [voiceOn, setVoiceOn] = useState(matchConfig.voiceOn);
+    const [voiceRecognitionOn, setVoiceRecognitionOn] = useState(matchConfig.voiceRecognitionOn);
+
+    console.log("Setup Voice On:", voiceOn, "/ Recognition On:", voiceRecognitionOn);
 
     const toggleEnds = () => {
       setP1PlaysRightEnd(previousState => !previousState);
@@ -39,21 +44,10 @@ export default function Setup({matchConfig, setMatchConfig}) {
       } else {
         setMatchConfig(previousState => {
           return { ...previousState,
-            soundOn: !soundOn }
+            p1End: "left",
+            p2End: "right" }
         });
       }
-    }
-
-    const toggleSound = () => {
-      setSoundOn(previousState => !previousState);
-
-      setMatchConfig(previousState => {
-        return { ...previousState,
-          p1End: "right",
-          p2End: "left" }
-      });
-      
-
     }
     
     const handleOnChangeText = (text, field) => {
@@ -72,7 +66,7 @@ export default function Setup({matchConfig, setMatchConfig}) {
       } else {
 
       }
-          }
+    }
 
     const handleOnClose = () => {
  
@@ -82,6 +76,24 @@ export default function Setup({matchConfig, setMatchConfig}) {
         });
     }
 
+    const toggleVoice = () => {
+      setVoiceOn(previousState => !previousState);
+      
+      setMatchConfig(previousState => {
+      
+        return { ...previousState,
+          voiceOn: !voiceOn }
+      });  
+    }
+
+    const toggleVoiceRecognition = () => {
+      setVoiceRecognitionOn(previousState => !previousState);
+
+      setMatchConfig(previousState => {
+        return { ...previousState,
+          voiceRecognitionOn: !voiceRecognitionOn }
+      }); 
+    }
 
     return (
       <View style={styles.container}>
@@ -156,20 +168,19 @@ export default function Setup({matchConfig, setMatchConfig}) {
           setItems={setItems}
        />
 
-          <View style={styles.switchContainer}>
-            <Text> Sound On </Text>
+          <Pressable onPress={() => {toggleVoice()}}>
+            { (voiceOn == true) && <Ionicons name="volume-medium-sharp" size={24} color="black" />}
+            { (voiceOn == false) && <Ionicons name="volume-mute" size={24} color="black" />}
+          </Pressable>
 
-            <Switch
-              style={styles.switch}
-              trackColor={{false: '#000000', true: '#000000'}}
-              thumbColor={soundOn ? '#000000' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSound}
-              value={soundOn}
-            />
-
-            <Text> Off</Text>
-          </View>
+          <Pressable onPress={() => {setVoiceRecognitionOn(!voiceRecognitionOn)}}>
+            { (voiceRecognitionOn == true) && 
+              <View>
+                <Ionicons name="mic" size={24} color="black" /> 
+                <Text>On</Text>
+              </View>}
+            { (voiceRecognitionOn == false) && <Ionicons name="mic-off" size={24} color="black" />}
+          </Pressable>
 
         </View>
       </View>

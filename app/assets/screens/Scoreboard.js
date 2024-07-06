@@ -4,7 +4,6 @@ import { React, useState } from 'react'
 
 import Cards from '../../components/Cards';
 import GameScore from '../../components/GameScore';
-import History from '../../components/History';
 import IconMenu from '../../components/iconMenu';
 import MatchScore from '../../components/MatchScore';
 import Server from '../../components/Server';
@@ -53,8 +52,8 @@ export default function Scoreboard({matchConfig, setMatchConfig}) {
   const [serverIndex, setServerIndex] = useState(0);                    // 0 = server on left; 1 = on right
   const [matchStarted, setMatchStarted] = useState(false);              // records if match is stated so as to prevent a change of server
   
-  const [volumeOn, setVolumeOn] = useState(false);                      // true = call out score
-  const [voiceRecognitionOn, setVoiceRecognitionOn] = useState(false);  //true = listen for score
+  const [volumeOn, setVolumeOn] = useState(matchConfig.volumeOn);                                 // true = call out score
+  const [voiceRecognitionOn, setVoiceRecognitionOn] = useState(matchConfig.voiceRecognitionOn);   //true = listen for score
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -109,9 +108,6 @@ export default function Scoreboard({matchConfig, setMatchConfig}) {
 
     </SafeAreaView>
   );
-
-
-//    <History matchScoreHistory={matchScoreHistory} gameScoreHistory={gameScoreHistory}/>
 }
 
 const styles = StyleSheet.create({
